@@ -4,19 +4,19 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         less: {
-            dev: {
+            tmp: {
                 options: {
                     paths: ["src/style"]
                 },
                 files: {
-                    "target/css/styles.css": "src/style/base.less"
+                    "tmp/css/styles.css": "src/style/base.less"
                 }
             }
         },
         cssmin: {
-            src: {
+            tmp: {
                 files: {
-                    'target/css/styles.min.css': ['target/css/*.css', '!target/css/*.min.css']
+                    'tmp/css/styles.css': ['tmp/css/styles.css']
                 }
             }
         },
@@ -24,25 +24,23 @@ module.exports = function(grunt) {
             options: {
                 mangle: false
             },
-            src: {
-                files: {
-                    'target/js/test.min.js': [
-                        'src/js/main.js',
-                        'bower_components/chico/dist/ui/chico.js',
-                        'bower_components/jquery/dist/jquery.js',
-                        'bower_components/tiny.js/dist/tiny.js'
-                    ]
-                }
+            tmp: {
+                files: [{
+                    expand: true,
+                    cwd: 'src/js',
+                    src: '**/*.js',
+                    dest: 'tmp/js'
+                }]
             }
         },
         htmlmin: {
-            dist: {
+            tmp: {
                 options: {
                     removeComments: true,
                     collapseWhitespace: true
                 },
-                files: {                                   // Dictionary of files
-                    'target/index.html': 'src/index.html',     // 'destination': 'source'
+                files: {
+                    'tmp/index.html': 'src/index.html',
                 }
             },
         },
@@ -61,16 +59,50 @@ module.exports = function(grunt) {
                     require('autoprefixer')({browsers: 'last 2 versions'}), // add vendor prefixes
                 ]
             },
-            dist: {
-                src: 'target/css/*.css'
+            tmp: {
+                src: 'tmp/css/*.css'
             }
         },
         copy: {
-            bower: {
+            bowerTmp: {
                 files: [
                     // includes files within path and its sub-directories
-                    {expand: false, filter: 'isFile', src: ['bower_components/chico/dist/ui/chico.css'], dest: 'target/css/chico.css'},
+                    {expand: false, filter: 'isFile', src: ['bower_components/chico/dist/ui/chico.min.css'], dest: 'tmp/css/chico.min.css'},
+                    {expand: false, filter: 'isFile', src: ['bower_components/jquery/dist/jquery.min.js'], dest: 'tmp/js/jquery.min.js'}
                 ],
+            },
+            tmpToTarget: {
+                files: [
+                    {expand: true, filter: 'isFile', flatten: true, src: ['tmp/css/*'], dest: 'target/css/'},
+                    {expand: true, filter: 'isFile', flatten: true, src: ['tmp/js/*'], dest: 'target/js/'},
+                    {expand: true, filter: 'isFile', flatten: true, src: ['tmp/*'], dest: 'target/'},
+                ]
+                //src: 'tmp/**/*',
+                //dest: 'target/',
+                //flatten: true,
+                //expand: false
+            }
+        },
+        clean: {
+            tmp: {
+                src: ["tmp/**/*", "!tpm/.gitignore"]
+            },
+            tmpNoTest: {
+                src: ["tmp/css/*", "tmp/js/*", "!tmp/css/test.css", "!tmp/js/test.js", "!tmp/index.html","!tmp/.gitignore"]
+            },
+            target: {
+                src: ["target/**/*", "!target/.gitignore"]
+            }
+        },
+        concat: {
+            options: {
+                banner: '/** Hola ***/'
+            },
+            tmp: {
+                files: {
+                    'tmp/css/test.css': ['tmp/css/*.css'],
+                    'tmp/js/test.js': ['tmp/js/*.js'],
+                },
             },
         },
     });
@@ -84,8 +116,12 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-postcss');
     grunt.loadNpmTasks('grunt-injector');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-concat');
 
-    grunt.registerTask('default', ['less', 'copy', 'cssmin', 'uglify', 'htmlmin', 'postcss', 'watch']);
-    grunt.registerTask('build', ['less', 'cssmin', 'uglify', 'htmlmin', 'postcss']);
+
+    grunt.registerTask('generate_tmp', ['clean:tmp', 'less:tmp', 'cssmin:tmp', 'postcss:tmp', 'uglify:tmp', 'copy:bowerTmp', 'htmlmin:tmp', 'concat:tmp']);
+    grunt.registerTask('tmp_to_target', ['clean:target', 'clean:tmpNoTest', 'copy:tmpToTarget', 'clean:tmp']);
+    grunt.registerTask('build', ['generate_tmp', 'tmp_to_target']);
+    grunt.registerTask('dev', ['build', 'watch'])
 
 };
