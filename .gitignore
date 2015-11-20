@@ -3,3 +3,5 @@ target/*
 node_modules
 bower_components
 .idea
+tmp/*
+!tmp/.gitignore
