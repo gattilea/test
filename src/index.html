@@ -2,15 +2,95 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>MercadoLibre UX Test by Leandro Gatti</title>
 
         <link rel="stylesheet" href="css/test.css">
     </head>
     <body>
-        <div class="main-container">
-            <h1></h1>
-            <section></section>
-            <section></section>
+        <div class="main-container" itemscope itemtype="http://schema.org/Product">
+            <h1 itemprop="name" >Ipad Mini Apple 16 Gb Wifi Led 7.9</h1>
+            <section class="quick-info">
+                <img itemprop="image" src="images/product-default.png" alt="Product Image">
+                <div class="info">
+                    <div class="price">
+                        $4799<sub>99</sub>
+                    </div>
+                    <form class="ch-form" name="buy-form" actions="">
+                        <div class="ch-form-row">
+                            <label>Quantity</label>
+                            <select name="quantity">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </div>
+                        <div class="ch-form-row">
+                            <label>Payments</label>
+                            <select name="payments">
+                                <option value="1">1</option>
+                                <option value="3">3</option>
+                                <option value="6">6</option>
+                                <option value="12">12</option>
+                            </select>
+                        </div>
+                        <div class="ch-form-actions">
+                            <input type="submit" class="ch-btn" value="Buy">
+                            <p class="clarification">MercadoLibre isn't the owner of this product</p>
+                        </div>
+                    </form>
+
+                    <article class="related-products">
+                        <h4>More products like this</h4>
+                        <div id="rp-carousel">
+                            <ul>
+                                <li itemprop="isSimilarTo"><a href="#"><img itemprop="image" src="images/product-default.png" alt="Product Image"></a></li>
+                                <li itemprop="isSimilarTo"><a href="#"><img itemprop="image" src="images/product-default.png" alt="Product Image"></a></li>
+                                <li itemprop="isSimilarTo"><a href="#"><img itemprop="image" src="images/product-default.png" alt="Product Image"></a></li>
+                                <li itemprop="isSimilarTo"><a href="#"><img itemprop="image" src="images/product-default.png" alt="Product Image"></a></li>
+                                <li itemprop="isSimilarTo"><a href="#"><img itemprop="image" src="images/product-default.png" alt="Product Image"></a></li>
+                                <li itemprop="isSimilarTo"><a href="#"><img itemprop="image" src="images/product-default.png" alt="Product Image"></a></li>
+                                <li itemprop="isSimilarTo"><a href="#"><img itemprop="image" src="images/product-default.png" alt="Product Image"></a></li>
+                                <li itemprop="isSimilarTo"><a href="#"><img itemprop="image" src="images/product-default.png" alt="Product Image"></a></li>
+                                <li itemprop="isSimilarTo"><a href="#"><img itemprop="image" src="images/product-default.png" alt="Product Image"></a></li>
+                            </ul>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            <hr class="section-separator" />
+            <section class="tabs-container">
+                <div class="tabs">
+                    <div class="tab">
+                        <input type="radio" id="tab-description" name="tab-input">
+                        <label for="tab-description">Description</label>
+                        <div itemprop="description" class="content">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ultricies elit et lacinia venenatis. Duis vulputate justo ac augue euismod, eu faucibus risus consectetur. Pellentesque est nisl, pharetra vitae tincidunt sit amet, scelerisque sed magna. Praesent in consequat lacus. Cras facilisis libero vel varius viverra. Morbi augue quam, euismod in auctor pellentesque, rutrum luctus diam. Praesent quam tellus, dapibus id arcu ac, malesuada condimentum dolor. Cras elementum, risus eget egestas scelerisque, odio velit tincidunt erat, vitae tempor tortor justo a magna. Duis elementum nibh in metus sodales, eget pellentesque ligula rutrum. Ut sed leo imperdiet, mattis orci porttitor, varius urna. Praesent cursus enim sit amet est vulputate, ac varius nisl sollicitudin. Cras feugiat ipsum sit amet justo ullamcorper facilisis. Integer quis volutpat orci.
+                            Sed eget ligula a dui volutpat rutrum. Pellentesque rhoncus eu arcu eu tristique. Phasellus eleifend, est ac condimentum consectetur, quam libero porttitor turpis, non auctor libero dui in leo. Pellentesque suscipit neque mauris, vitae condimentum orci finibus id. Aliquam tellus nulla, posuere at convallis vitae, euismod ac massa. Proin sagittis lorem nec tellus interdum, quis interdum nisl volutpat. Nunc tellus purus, dictum vitae pulvinar sed, elementum in urna. Ut et justo vel justo laoreet lobortis.
+                            Morbi placerat eget enim eget pellentesque. Duis et augue sit amet enim gravida porta. In iaculis odio eget aliquam faucibus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut et lectus felis. Suspendisse dolor purus, dignissim nec consectetur id, accumsan eu augue. Pellentesque a ornare mauris, eu varius mauris. Nam posuere eget lorem vel pharetra. Pellentesque fermentum neque sem, quis fermentum mauris cursus sit amet. Vestibulum tristique egestas dui vel pellentesque. Donec et elit imperdiet est cursus porttitor. Aenean sodales neque dictum placerat bibendum.
+                            Nunc vehicula velit nec libero rutrum hendrerit. Quisque quis molestie elit. Sed consequat tempor ante, quis commodo libero faucibus quis. Aenean pretium libero metus, et porta tellus placerat vel. In vel dictum tellus, et elementum erat. Donec lobortis diam sit amet ligula porta, quis consequat neque sodales. Praesent neque justo, euismod vel dapibus in, bibendum at metus. Morbi posuere semper justo id mattis. Fusce sodales felis nulla, ut tincidunt mauris imperdiet eu. Mauris porttitor ligula maximus felis venenatis dictum. Vivamus vel metus massa. Nulla facilisi. Interdum et malesuada fames ac ante ipsum primis in faucibus. Fusce eget tincidunt est. Nullam bibendum efficitur fringilla.
+                            Nulla ac ante a elit finibus auctor. Donec et rutrum massa. Proin egestas egestas ante et congue. Maecenas facilisis elit magna, eget aliquet quam blandit et. Aenean tempor ac justo sed porta. Nam aliquam felis eu nibh feugiat, in aliquam ante bibendum. Sed enim augue, ultricies ut ex at, cursus tincidunt mauris. Sed viverra, dolor nec malesuada rutrum, ipsum nisi viverra augue, non dapibus turpis est id mauris. Mauris fermentum aliquet erat eget dictum. Duis feugiat ultricies elementum.
+                        </div>
+                    </div>
+
+                    <div class="tab">
+                        <input type="radio" id="tab-questions" name="tab-input" checked>
+                        <label for="tab-questions">Questions</label>
+                        <div class="content">
+                            <div class="question">
+                                <div class="buyer ch-box-ok">
+                                    <strong class="user">Buyer:</strong>
+                                    <p>Do you have this one in white?</p>
+                                </div>
+                                <div class="seller ch-box-info">
+                                    <strong class="user">Seller:</strong>
+                                    <p>No i don't, i only have black</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
 
         <script type="text/javascript" src="js/test.js"></script>
