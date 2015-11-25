@@ -68,19 +68,25 @@ module.exports = function(grunt) {
                 files: [
                     // includes files within path and its sub-directories
                     {expand: false, filter: 'isFile', src: ['bower_components/chico/dist/ui/chico.min.css'], dest: 'tmp/css/chico.min.css'},
-                    {expand: false, filter: 'isFile', src: ['bower_components/jquery/dist/jquery.min.js'], dest: 'tmp/js/jquery.min.js'}
+                    {expand: false, filter: 'isFile', src: ['bower_components/chico/dist/ui/chico.min.js'], dest: 'tmp/js/chico.min.js'},
+                    {expand: false, filter: 'isFile', src: ['bower_components/jquery/dist/jquery.min.js'], dest: 'tmp/js/jquery.min.js'},
+                    {expand: false, filter: 'isFile', src: ['bower_components/tiny.js/dist/tiny.min.js'], dest: 'tmp/js/tiny.min.js'},
+                    {expand: true, filter: 'isFile', flatten: true, src: ['bower_components/chico/dist/assets/*'], dest: 'tmp/assets/'}
                 ],
+            },
+            srcToTmp: {
+                files: [
+                    {expand: true, filter: 'isFile', flatten: true, src: ['src/images/*'], dest: 'tmp/images/'},
+                ]
             },
             tmpToTarget: {
                 files: [
                     {expand: true, filter: 'isFile', flatten: true, src: ['tmp/css/*'], dest: 'target/css/'},
                     {expand: true, filter: 'isFile', flatten: true, src: ['tmp/js/*'], dest: 'target/js/'},
+                    {expand: true, filter: 'isFile', flatten: true, src: ['tmp/images/*'], dest: 'target/images/'},
                     {expand: true, filter: 'isFile', flatten: true, src: ['tmp/*'], dest: 'target/'},
+                    {expand: true, filter: 'isFile', flatten: true, src: ['tmp/assets/*'], dest: 'target/assets/'},
                 ]
-                //src: 'tmp/**/*',
-                //dest: 'target/',
-                //flatten: true,
-                //expand: false
             }
         },
         clean: {
@@ -96,12 +102,15 @@ module.exports = function(grunt) {
         },
         concat: {
             options: {
-                banner: '/** Hola ***/'
+                banner: '/** Test.js ***/\n',
+                process: function(src, filepath) {
+                    return '\n/**' + filepath.split('/').pop() + '**/\n' + src;
+                }
             },
             tmp: {
                 files: {
                     'tmp/css/test.css': ['tmp/css/*.css'],
-                    'tmp/js/test.js': ['tmp/js/*.js'],
+                    'tmp/js/test.js': ['tmp/js/jquery.min.js', 'tmp/js/tiny.min.js', 'tmp/js/chico.min.js', 'tmp/js/main.js'],
                 },
             },
         },
@@ -114,12 +123,11 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-postcss');
-    grunt.loadNpmTasks('grunt-injector');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-concat');
 
 
-    grunt.registerTask('generate_tmp', ['clean:tmp', 'less:tmp', 'cssmin:tmp', 'postcss:tmp', 'uglify:tmp', 'copy:bowerTmp', 'htmlmin:tmp', 'concat:tmp']);
+    grunt.registerTask('generate_tmp', ['clean:tmp', 'less:tmp', 'cssmin:tmp', 'postcss:tmp', 'uglify:tmp', 'copy:bowerTmp', 'copy:srcToTmp', 'htmlmin:tmp', 'concat:tmp']);
     grunt.registerTask('tmp_to_target', ['clean:target', 'clean:tmpNoTest', 'copy:tmpToTarget', 'clean:tmp']);
     grunt.registerTask('build', ['generate_tmp', 'tmp_to_target']);
     grunt.registerTask('dev', ['build', 'watch'])
